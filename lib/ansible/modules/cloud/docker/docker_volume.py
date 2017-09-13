@@ -149,6 +149,10 @@ class DockerVolumeManager(object):
         except APIError as e:
             self.client.fail(text_type(e))
 
+        #Source https://github.com/ansible/ansible/issues/30239
+        if volumes[u'Volumes'] is None:
+            return None
+
         for volume in volumes[u'Volumes']:
             if volume['Name'] == self.parameters.volume_name:
                 return volume
